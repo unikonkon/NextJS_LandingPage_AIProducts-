@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import AIBrain from "./AIBrain";
 
 export default function Hero() {
+  const [activeRegion, setActiveRegion] = useState<"tts" | "stt" | "rag" | "all" | null>("all");
   const heroRef = useRef<HTMLElement>(null);
   const particlesRef = useRef<HTMLDivElement>(null);
 
@@ -194,249 +196,95 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Visual */}
+          {/* Visual - AI Brain */}
           <div className="hero-visual relative">
-            <div className="relative aspect-square max-w-lg mx-auto">
-              {/* Central Orb */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="relative w-48 h-48 md:w-64 md:h-64">
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[var(--secondary)]/30 to-[var(--accent-purple)]/30 animate-pulse-glow" />
-                  <div className="absolute inset-4 rounded-full bg-[var(--background)] flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="text-5xl md:text-6xl font-heading text-gradient font-bold">
-                        AI
-                      </div>
-                      <div className="text-sm text-[var(--text-muted)] mt-1">
-                        Powered
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            <div className="relative max-w-lg mx-auto">
+              {/* Atmospheric glow behind brain */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="w-80 h-80 md:w-[420px] md:h-[420px] rounded-full bg-gradient-to-br from-[#7B2CBF]/20 via-[#00D9FF]/10 to-[#00FF88]/15 blur-3xl animate-pulse-glow" />
               </div>
 
-              {/* Orbiting Elements */}
-              <div
-                className="absolute inset-0 animate-[spin_20s_linear_infinite]"
-                style={{ animationDirection: "reverse" }}
-              >
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                  <div className="w-16 h-16 rounded-xl bg-[var(--background-card)] border border-[var(--secondary)]/30 flex items-center justify-center shadow-lg">
-                    <svg
-                      className="w-8 h-8 text-[var(--secondary)]"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
-                      />
-                    </svg>
-                  </div>
-                </div>
+              {/* AI Brain Component */}
+              <div className="relative z-10 sm:block hidden">
+                <AIBrain
+                  size={420}
+                  activeRegion={activeRegion}
+                  showParticles={true}
+                  animate={true}
+                  className="w-full h-auto drop-shadow-2xl"
+                />
               </div>
 
-              <div className="absolute inset-0 animate-[spin_25s_linear_infinite]">
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2">
-                  <div className="w-16 h-16 rounded-xl bg-[var(--background-card)] border border-[var(--accent-purple)]/30 flex items-center justify-center shadow-lg">
-                    <svg
-                      className="w-8 h-8 text-[var(--accent-purple)]"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"
-                      />
+              {/* Feature indicators around brain */}
+              {/* <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex gap-3">
+                <button
+                  onClick={() => setActiveRegion("tts")}
+                  className={`group relative px-4 py-2 rounded-full text-xs font-medium transition-all duration-300 backdrop-blur-sm border ${
+                    activeRegion === "tts"
+                      ? "bg-[#FF006E]/20 border-[#FF006E]/50 text-[#FF006E]"
+                      : "bg-white/5 border-white/10 text-white/60 hover:bg-white/10 hover:border-white/20"
+                  }`}
+                >
+                  <span className="flex items-center gap-1.5">
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
                     </svg>
-                  </div>
-                </div>
-              </div>
-
-              <div className="absolute inset-0 animate-[spin_30s_linear_infinite]">
-                <div className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2">
-                  <div className="w-16 h-16 rounded-xl bg-[var(--background-card)] border border-[var(--accent-blue)]/30 flex items-center justify-center shadow-lg">
-                    <svg
-                      className="w-8 h-8 text-[var(--accent-blue)]"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"
-                      />
+                    TTS
+                  </span>
+                </button>
+                <button
+                  onClick={() => setActiveRegion("stt")}
+                  className={`group relative px-4 py-2 rounded-full text-xs font-medium transition-all duration-300 backdrop-blur-sm border ${
+                    activeRegion === "stt"
+                      ? "bg-[#00D9FF]/20 border-[#00D9FF]/50 text-[#00D9FF]"
+                      : "bg-white/5 border-white/10 text-white/60 hover:bg-white/10 hover:border-white/20"
+                  }`}
+                >
+                  <span className="flex items-center gap-1.5">
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                     </svg>
-                  </div>
-                </div>
-              </div>
-
-              {/* Brain - Neural Network */}
-              <div
-                className="absolute inset-0 animate-[spin_22s_linear_infinite]"
-                style={{ animationDirection: "reverse" }}
-              >
-                <div className="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2">
-                  <div className="w-16 h-16 rounded-xl bg-[var(--background-card)] border border-pink-500/30 flex items-center justify-center shadow-lg">
-                    <svg
-                      className="w-8 h-8 text-pink-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                      />
+                    STT
+                  </span>
+                </button>
+                <button
+                  onClick={() => setActiveRegion("rag")}
+                  className={`group relative px-4 py-2 rounded-full text-xs font-medium transition-all duration-300 backdrop-blur-sm border ${
+                    activeRegion === "rag"
+                      ? "bg-[#7B2CBF]/20 border-[#7B2CBF]/50 text-[#7B2CBF]"
+                      : "bg-white/5 border-white/10 text-white/60 hover:bg-white/10 hover:border-white/20"
+                  }`}
+                >
+                  <span className="flex items-center gap-1.5">
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                     </svg>
-                  </div>
-                </div>
-              </div>
-
-              {/* Sparkles - AI Generation */}
-              <div className="absolute inset-0 animate-[spin_28s_linear_infinite]">
-                <div className="absolute top-[15%] right-[15%]">
-                  <div className="w-14 h-14 rounded-xl bg-[var(--background-card)] border border-yellow-500/30 flex items-center justify-center shadow-lg">
-                    <svg
-                      className="w-7 h-7 text-yellow-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-                      />
+                    RAG
+                  </span>
+                </button>
+                <button
+                  onClick={() => setActiveRegion("all")}
+                  className={`group relative px-4 py-2 rounded-full text-xs font-medium transition-all duration-300 backdrop-blur-sm border ${
+                    activeRegion === "all"
+                      ? "bg-gradient-to-r from-[#7B2CBF]/20 to-[#00D9FF]/20 border-[#00D9FF]/50 text-[#00D9FF]"
+                      : "bg-white/5 border-white/10 text-white/60 hover:bg-white/10 hover:border-white/20"
+                  }`}
+                >
+                  <span className="flex items-center gap-1.5">
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                     </svg>
-                  </div>
-                </div>
-              </div>
-
-              {/* Robot - Automation */}
-              {/* <div
-                className="absolute inset-0 animate-[spin_35s_linear_infinite]"
-                style={{ animationDirection: "reverse" }}
-              >
-                <div className="absolute bottom-[15%] left-[15%]">
-                  <div className="w-14 h-14 rounded-xl bg-[var(--background-card)] border border-emerald-500/30 flex items-center justify-center shadow-lg">
-                    <svg
-                      className="w-7 h-7 text-emerald-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                      />
-                    </svg>
-                  </div>
-                </div>
+                    ALL
+                  </span>
+                </button>
               </div> */}
 
-              {/* Eye - Computer Vision */}
-              {/* <div className="absolute inset-0 animate-[spin_32s_linear_infinite]">
-                <div className="absolute top-[15%] left-[15%]">
-                  <div className="w-14 h-14 rounded-xl bg-[var(--background-card)] border border-cyan-500/30 flex items-center justify-center shadow-lg">
-                    <svg
-                      className="w-7 h-7 text-cyan-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              </div> */}
-
-              {/* CPU/Chip - AI Processing */}
-              <div
-                className="absolute inset-0 animate-[spin_38s_linear_infinite]"
-                style={{ animationDirection: "reverse" }}
-              >
-                <div className="absolute bottom-[15%] right-[15%]">
-                  <div className="w-14 h-14 rounded-xl bg-[var(--background-card)] border border-orange-500/30 flex items-center justify-center shadow-lg">
-                    <svg
-                      className="w-7 h-7 text-orange-500"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={1.5}
-                        d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
-                      />
-                    </svg>
-                  </div>
-                </div>
+              {/* Floating label */}
+              <div className="sm:block hidden absolute -top-6 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#7B2CBF]/30 to-[#00D9FF]/30 backdrop-blur-md border border-white/10">
+                <span className="text-xs font-medium bg-gradient-to-r from-[#00D9FF] to-[#00FF88] bg-clip-text text-transparent">
+                  Neural Processing Engine
+                </span>
               </div>
-
-              {/* Connection Lines */}
-              <svg
-                className="absolute inset-0 w-full h-full"
-                viewBox="0 0 400 400"
-              >
-                <circle
-                  cx="200"
-                  cy="200"
-                  r="150"
-                  fill="none"
-                  stroke="url(#lineGradient)"
-                  strokeWidth="1"
-                  strokeDasharray="4 4"
-                  opacity="0.3"
-                />
-                <circle
-                  cx="200"
-                  cy="200"
-                  r="120"
-                  fill="none"
-                  stroke="url(#lineGradient)"
-                  strokeWidth="1"
-                  strokeDasharray="4 4"
-                  opacity="0.2"
-                />
-                <defs>
-                  <linearGradient
-                    id="lineGradient"
-                    x1="0%"
-                    y1="0%"
-                    x2="100%"
-                    y2="100%"
-                  >
-                    <stop offset="0%" stopColor="#64FFDA" />
-                    <stop offset="50%" stopColor="#A855F7" />
-                    <stop offset="100%" stopColor="#3B82F6" />
-                  </linearGradient>
-                </defs>
-              </svg>
             </div>
           </div>
         </div>
