@@ -7,12 +7,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const logos = [
-  { name: "Company A", width: 120 },
-  { name: "Company B", width: 100 },
-  { name: "Company C", width: 110 },
-  { name: "Company D", width: 90 },
-  { name: "Company E", width: 130 },
-  { name: "Company F", width: 95 },
+  { name: "Company Thaitech A", width: 200 },
+  { name: "Company Thaitech B", width: 200 },
+  { name: "Company Thaitech C", width: 200 },
+  { name: "Company Thaitech D", width: 200 },
 ];
 
 const testimonials = [

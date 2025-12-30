@@ -166,14 +166,6 @@ export default function ProductsOverview() {
                 }}
               />
 
-              {/* Timeline Dot */}
-              <div className="absolute -left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full border-2 border-[var(--background)] bg-[var(--background-elevated)] z-10 hidden lg:flex items-center justify-center">
-                <div
-                  className="w-2 h-2 rounded-full"
-                  style={{ backgroundColor: product.color }}
-                />
-              </div>
-
               {/* Content */}
               <div className="relative z-10">
                 {/* Icon */}
