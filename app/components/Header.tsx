@@ -38,11 +38,10 @@ export default function Header() {
   return (
     <header
       ref={headerRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-[var(--background)]/90 backdrop-blur-xl border-b border-[var(--secondary)]/10"
-          : "bg-transparent"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+        ? "bg-[var(--background)]/90 backdrop-blur-xl border-b border-[var(--secondary)]/10"
+        : `bg-transparent ${isMobileMenuOpen ? "bg-[var(--background)]/90 backdrop-blur-xl border-b border-[var(--secondary)]/10" : ""}`
+        }`}
     >
       <div className="container-custom">
         <div className="flex items-center justify-between h-20">
@@ -95,19 +94,16 @@ export default function Header() {
           >
             <div className="flex flex-col gap-1.5">
               <span
-                className={`w-6 h-0.5 bg-[var(--text-primary)] transition-all duration-300 ${
-                  isMobileMenuOpen ? "rotate-45 translate-y-2" : ""
-                }`}
+                className={`w-6 h-0.5 bg-[var(--text-primary)] transition-all duration-300 ${isMobileMenuOpen ? "rotate-45 translate-y-2" : ""
+                  }`}
               />
               <span
-                className={`w-6 h-0.5 bg-[var(--text-primary)] transition-all duration-300 ${
-                  isMobileMenuOpen ? "opacity-0" : ""
-                }`}
+                className={`w-6 h-0.5 bg-[var(--text-primary)] transition-all duration-300 ${isMobileMenuOpen ? "opacity-0" : ""
+                  }`}
               />
               <span
-                className={`w-6 h-0.5 bg-[var(--text-primary)] transition-all duration-300 ${
-                  isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
-                }`}
+                className={`w-6 h-0.5 bg-[var(--text-primary)] transition-all duration-300 ${isMobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
+                  }`}
               />
             </div>
           </button>
@@ -115,9 +111,8 @@ export default function Header() {
 
         {/* Mobile Menu */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-300 ${
-            isMobileMenuOpen ? "max-h-80 pb-6" : "max-h-0"
-          }`}
+          className={`md:hidden overflow-hidden transition-all duration-300 ${isMobileMenuOpen ? "max-h-80 pb-6" : "max-h-0"
+            }`}
         >
           <nav className="flex flex-col gap-4">
             {navLinks.map((link) => (
